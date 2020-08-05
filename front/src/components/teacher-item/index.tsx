@@ -1,37 +1,56 @@
-import React from 'react';
+import React from 'react'
 
-import whatsappIcon from '../../assets/images/icons/whatsapp.svg';
+import whatsappIcon from '../../assets/images/icons/whatsapp.svg'
+import api from '../../services/api'
 import './styles.css'
 
-function TeacherItem () {
+export interface Teacher {
+  id: number
+  name: string
+  avatar: string
+  whatsapp: string
+  bio: string
+  cost: number
+  subject: string
+}
+
+interface TeacherItemProps {
+  item: Teacher
+}
+
+const TeacherItem: React.FC<TeacherItemProps> = ({ item }) => {
+  async function createNewConnection () {
+    await api.post('connections', { user_id: item.id })
+  }
+
   return (
     <article className="teacher-item">
       <header>
-        <img src="https://directemployers.org/wp-content/uploads/2018/08/avatar-JohnDoe.jpg" alt="John Doe" />
+        <img src={item.avatar} alt={item.name} />
         <div>
-          <strong>John Doe</strong>
-          <span>Química</span>
+          <strong>{item.name}</strong>
+          <span>{item.subject}</span>
         </div>
       </header>
 
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis quos numquam eos ex, placeat fugiat quasi?
-        <br /><br />
-        Placeat natus, incidunt sint aperiam. Adipisci fugit suscipit consectetur est ut alias, obcaecati cupiditate.
-      </p>
+      <p>{item.bio}</p>
 
       <footer>
         <p>
           Preço/hora
-          <strong>R$ 80,00</strong>
+          <strong>R$ {item.cost}</strong>
         </p>
-        <button type="button">
+        <a
+          href={`https://wa.me/${item.whatsapp}`}
+          target="_blank"
+          onClick={createNewConnection}
+        >
           <img src={whatsappIcon} alt="Whatsapp" />
           Entrar em contato
-        </button>
+        </a>
       </footer>
     </article>
   )
 }
 
-export default TeacherItem;
+export default TeacherItem

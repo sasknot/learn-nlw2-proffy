@@ -67,29 +67,35 @@ export default class ClassesController {
 
   async list (req: Request, res: Response) {
     const filters = req.query as ClassesFilters
+    const filterWeekDay = Number(filters.week_day)
+    const filterTime = convertHourToMinutes(filters.time)
 
-    if (!filters.week_day || !filters.subject || !filters.time) {
-      return res.status(400).json({
-        error: 'Missing filters to search classes'
-      })
-    }
-
-    const weekDay = Number(filters.week_day)
-    const timeInMinutes = convertHourToMinutes(filters.time)
-
-    const classes = await db('classes')
+    const query = db('classes')
       .whereExists(function () {
-        this.select('class_schedules.*')
+        const subQuery = this.select('class_schedules.*')
           .from('class_schedules')
           .whereRaw('`class_schedules`.`class_id` = `classes`.`id`')
-          .whereRaw('`class_schedules`.`week_day` = ??', [weekDay])
-          .whereRaw('`class_schedules`.`from` <= ??', [timeInMinutes])
-          .whereRaw('`class_schedules`.`to` > ??', [timeInMinutes])
+
+        if (filterWeekDay) {
+          subQuery.whereRaw('`class_schedules`.`week_day` = ??', [filterWeekDay])
+        }
+
+        if (filterTime) {
+          subQuery.whereRaw('`class_schedules`.`from` <= ??', [filterTime])
+            .whereRaw('`class_schedules`.`to` > ??', [filterTime])
+        }
+
+        return subQuery
       })
-      .where('classes.subject', '=', filters.subject)
       .join('users', 'classes.user_id', '=', 'users.id')
       .select(['classes.*', 'users.*'])
 
-    return res.json(classes)
+    if (filters.subject) {
+      query.where('classes.subject', '=', filters.subject)
+    }
+
+    const classes = await query
+
+    return res.json(await classes)
   }
 }
