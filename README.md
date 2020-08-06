@@ -17,3 +17,11 @@
 ## Web
 
 See [here](https://sasknot.github.io/learn-nlw2-proffy/)
+
+## Mobile
+
+`expo init mobile --npm` expo-template-blank-typescript
+`npm start`
+
+
+https://github.com/Rocketseat/expo-common-issues

@@ -1,0 +1,17 @@
+{
+  "name": "learn-nlw2-proffy",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "pm2 start ecosystem.config.js && pm2 logs"
+  },
+  "homepage": "https://github.com/sasknot/learn-nlw2-proffy#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sasknot/learn-nlw2-proffy.git"
+  },
+  "author": "Rafael Silva <rafaelfsilva1@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "pm2": "^4.4.0"
+  }
+}
