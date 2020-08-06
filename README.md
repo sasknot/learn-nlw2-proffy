@@ -1,6 +1,6 @@
 # Learn NLW2 Proffy
 
-## Back
+## API
 
 ### Conexões
 
@@ -14,6 +14,6 @@
   - Filtrar por matéria, dia da semana e horário;
 
 
-## Front
+## Web
 
 See [here](https://sasknot.github.io/learn-nlw2-proffy/)
