@@ -1,0 +1,7 @@
+nnode_modules
+
+.DS_Store
+
+npm-debug.log*
+
+db.sqlite
