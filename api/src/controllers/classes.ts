@@ -3,15 +3,15 @@ import db from '../services/database'
 import convertHourToMinutes from '../helpers/convert_hour_to_minutes'
 
 interface ScheduleItem {
-  week_day: number;
-  from: string;
-  to: string;
+  week_day: number
+  from: string
+  to: string
 }
 
 interface ClassesFilters {
-  week_day?: string;
-  subject?: string;
-  time?: string;
+  week_day?: string
+  subject?: string
+  time?: string
 }
 
 export default class ClassesController {
@@ -68,7 +68,7 @@ export default class ClassesController {
   async list (req: Request, res: Response) {
     const filters = req.query as ClassesFilters
     const filterWeekDay = Number(filters.week_day)
-    const filterTime = convertHourToMinutes(filters.time)
+    const filterTime = filters.time ? convertHourToMinutes(filters.time) : false
 
     const query = db('classes')
       .whereExists(function () {

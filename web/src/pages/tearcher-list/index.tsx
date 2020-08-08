@@ -16,7 +16,6 @@ function TearcherList () {
   async function searchTeachers (event?: FormEvent) {
     if (event) event.preventDefault()
 
-    console.log('filters',subject,weekDay,time)
     try {
       const { data } = await api.get('classes', {
         params: { subject, week_day: weekDay, time }
