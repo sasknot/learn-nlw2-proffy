@@ -1,8 +1,16 @@
 import Knex from 'knex'
 
 export async function up (knex: Knex) {
-  return knex.schema.createTable('connections', (table) => {
+  return knex.schema.createTable('classes', (table) => {
     table.increments('id').primary()
+    table.decimal('cost').notNullable()
+
+    table.integer('subject_id')
+      .notNullable()
+      .references('subject')
+      .inTable('subjects')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
 
     table.integer('user_id')
       .notNullable()
@@ -14,9 +22,12 @@ export async function up (knex: Knex) {
     table.timestamp('created_at')
       .defaultTo(knex.fn.now())
       .notNullable()
+    table.timestamp('updated_at')
+      .defaultTo(knex.fn.now())
+      .notNullable()
   })
 }
 
 export async function down (knex: Knex) {
-  return knex.schema.dropTable('connections')
+  return knex.schema.dropTable('classes')
 }

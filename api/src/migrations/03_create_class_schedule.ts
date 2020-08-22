@@ -3,9 +3,17 @@ import Knex from 'knex'
 export async function up (knex: Knex) {
   return knex.schema.createTable('class_schedules', (table) => {
     table.increments('id').primary()
-    table.integer('week_day').notNullable()
-    table.integer('from').notNullable()
-    table.integer('to').notNullable()
+    table.enum('week_day', [
+      'sunday',
+      'monday',
+      'tuesday',
+      'wednesday',
+      'thursday',
+      'friday',
+      'saturday'
+    ]).notNullable()
+    table.time('from').notNullable()
+    table.time('to').notNullable()
 
     table.integer('class_id')
       .notNullable()
@@ -13,6 +21,13 @@ export async function up (knex: Knex) {
       .inTable('classes')
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
+
+    table.timestamp('created_at')
+      .defaultTo(knex.fn.now())
+      .notNullable()
+    table.timestamp('updated_at')
+      .defaultTo(knex.fn.now())
+      .notNullable()
   })
 }
 
