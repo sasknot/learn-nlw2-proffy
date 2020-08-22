@@ -38,4 +38,4 @@ export default knex(config)
 //   }
 // }
 
-// export default Database
+// export default new Database()
