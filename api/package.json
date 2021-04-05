@@ -4,7 +4,10 @@
   "private": true,
   "main": "src/server.js",
   "scripts": {
-    "start": "ts-node-dev --transpile-only --ignore-watch node_modules --respawn src/server.ts",
+    "predev": "npm run knex:migrate",
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules --respawn src/server.ts",
+    "prestart": "npm run knex:migrate",
+    "start": "ts-node src/server.ts",
     "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
     "knex:rollback": "knex --knexfile knexfile.ts migrate:rollback",
     "test": "jest"
@@ -20,7 +23,9 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "knex": "^0.21.2",
-    "sqlite3": "^5.0.0"
+    "sqlite3": "^5.0.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.7",

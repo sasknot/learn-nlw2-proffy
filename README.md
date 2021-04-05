@@ -1,8 +1,37 @@
 # Learn NLW2 Proffy
 
-## API
+## Requirements
 
-### Connections
+- [NodeJS](https://nodejs.org/)
+- [expo-cli](https://expo.io/) globally (`npm i -g expo-cli`)
+
+## Install
+
+- `npm ci` in each folder (`api`, `web` and `mobile`)
+
+## Development
+
+### API
+
+- `cd api && npm run dev`
+
+- or simply `docker-compose up api`
+
+### Web
+
+- `cd web`
+- Create a `.env` file and copy the contents of `.env.default` to it
+- `npm start`
+
+- or simply `docker-compose up web`
+
+### Mobile
+
+- `npm start`
+
+https://github.com/Rocketseat/expo-common-issues
+
+## API Connections
 
 - GET `/connections`: List the total of connections made untill the time of request
   - Request: *--empty--*
@@ -57,17 +86,6 @@
       bio: [string]
     }
     ```
-
-
-## Web
-
-`npm start`
-
-## Mobile
-
-`npm start`
-
-https://github.com/Rocketseat/expo-common-issues
 
 ## TODO
 

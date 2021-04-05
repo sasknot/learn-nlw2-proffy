@@ -1,0 +1,9 @@
+setup:
+  config:
+    API_PORT: 3333
+    REACT_APP_API_URL: http://localhost:3333
+
+build:
+  docker:
+    web:
+      dockerfile: heroku.Dockerfile

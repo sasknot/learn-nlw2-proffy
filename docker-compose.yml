@@ -1,0 +1,68 @@
+version: '3.4'
+services:
+  api:
+    build:
+      dockerfile: ./docker/api.Dockerfile
+      context: .
+    image: learn/nlw2-api
+    container_name: nlw2-api
+    ports:
+      - "3333:3333"
+    networks:
+      - nlw2-network
+    # depends_on:
+    #   - db
+    volumes:
+      - "./api:/var/www"
+      - "/var/www/node_modules"
+
+  web:
+    build:
+      dockerfile: ./docker/web.Dockerfile
+      context: .
+    image: learn/nlw2-web
+    container_name: nlw2-web
+    ports:
+      - "3000:3000"
+    networks:
+      - nlw2-network
+    depends_on:
+      - api
+    volumes:
+      - "./web:/var/www"
+      - "/var/www/node_modules"
+    environment:
+      - CI=true
+      - CHOKIDAR_USEPOLLING=true
+
+  # mobile:
+  #   build:
+  #     dockerfile: ./docker/mobile.Dockerfile
+  #     context: .
+  #   image: learn/nlw2-mobile
+  #   container_name: nlw2-mobile
+  #   ports:
+  #     - "19000:19000"
+  #   networks:
+  #     - nlw2-network
+  #   depends_on:
+  #     - api
+  #   volumes:
+  #     - "./mobile:/var/www"
+  #     - "/var/www/node_modules"
+
+  # db:
+  #   image:
+  #   container_name: nlw2-db
+  #   ports:
+  #     - ""
+  #   networks:
+  #     - nlw2-network
+  #   environment:
+  #     PASS: ""
+  #   volumes:
+  #     - ""
+
+networks:
+  nlw2-network:
+    driver: bridge
